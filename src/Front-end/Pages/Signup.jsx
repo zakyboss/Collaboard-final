@@ -40,7 +40,7 @@ export default function Signup() {
 
     try {
       const response = await fetch(
-        "https://collaboard-php-production.up.railway.app/Signup.php",
+        "https://collaboard-php-production.up.railway.app/Collaboard-php/Signup.php",
         {
           method: "POST",
           body: formDataToSend,

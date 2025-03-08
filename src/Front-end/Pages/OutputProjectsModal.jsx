@@ -61,7 +61,6 @@ export default function OutputProjectsModal({ onClose }) {
 
       const response = await fetch(
         "https://collaboard-php-production.up.railway.app/CheckVolunteerStatus.php",
-
         {
           method: "POST",
 
