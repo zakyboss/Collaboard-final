@@ -1,0 +1,18 @@
+.logoContainer {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo {
+  height: 5.2rem;
+  width: 100px;
+}
+
+.logoText {
+  font-size: 1.8rem;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif; /* Beautiful modern font */
+  color: var(--color-light--1); /* Adjust color as needed */
+  margin-left: 10px;
+}

@@ -1,0 +1,123 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+  }
+}
+
+/* First Section */
+.imageContainer {
+  position: relative;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.imageBox {
+  width: 250px;
+  height: 300px;
+  background-color: #ccc;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.raisedImage {
+  position: absolute;
+  top: -40px;
+  right: -20px;
+}
+
+/* Second Section (Text Left, Big Image Right) */
+.containerAlt {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .containerAlt {
+    flex-direction: row;
+  }
+}
+
+.textContainer {
+  width: 50%;
+}
+
+.imageContainerAlt {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bigImage {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Text Styling */
+.heading {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+}
+
+.description {
+  margin-top: 1rem;
+  color: whitesmoke;
+  line-height: 1.5;
+  font-size: 13px;
+}
+
+.stats {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 2rem;
+}
+
+.statNumber {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.statLabel {
+  color: white;
+}
+
+.button {
+  margin-top: 2rem;
+  background-color: #007bff;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}

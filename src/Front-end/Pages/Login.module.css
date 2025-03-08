@@ -1,0 +1,51 @@
+.login {
+  margin: 2.5rem;
+  padding: 2.5rem 5rem;
+  background-color: var(--color-dark--1);
+  min-height: calc(100vh - 5rem);
+}
+
+.form {
+  background-color: var(--color-dark--2);
+  border-radius: 7px;
+  padding: 2rem 3rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  /* Different from other form */
+  width: 48rem;
+  margin: 8rem auto;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.btn {
+  padding: 8px;
+  border-radius: 8px;
+  color: purple;
+  background-color: rgb(68, 241, 126);
+}
+.signupText {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: white;
+}
+
+.signupBtn {
+  background: none;
+  border: none;
+  color: rgb(68, 241, 126);
+  font-weight: bold;
+  cursor: pointer;
+}
+.signupBtn:hover {
+  text-decoration: underline;
+}
+

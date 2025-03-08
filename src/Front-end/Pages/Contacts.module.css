@@ -1,0 +1,46 @@
+:root {
+  --color-dark--1: #2d3439;
+  --color-light--1: #ffffff;
+  --color-accent: #00adb5;
+}
+
+.contactsPage {
+  background: var(--color-dark--1);
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  gap: 2rem;
+  max-width: 1100px;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.mapSection {
+  flex: 1;
+  min-width: 40%;
+}
+
+.formSection {
+  flex: 1;
+  min-width: 50%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mapSection,
+  .formSection {
+    width: 100%;
+  }
+}

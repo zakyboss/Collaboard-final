@@ -1,0 +1,59 @@
+.nav {
+  margin-top: 0; /* Changed from -9px */
+  display: flex; /* Enables flexbox */
+  align-items: center; /* Aligns items vertically */
+  justify-content: space-between;
+  background-color: var(--color-dark--0);
+  padding: 15px 20px;
+
+  /* Make the navigation sticky */
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensures nav stays on top of other content */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Optional: adds shadow for visual separation */
+}
+
+.nav ul {
+  display: flex;
+  justify-content: center; /* Center items */
+  gap: 20px; /* Add spacing between links */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav ul li {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.nav ul li a {
+  text-decoration: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav ul li a:hover {
+  background-color: #444;
+  color: #ffd700; /* Gold hover effect */
+}
+
+.nav :global(.active) {
+  background-color: #28a745; /* Green active state */
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.profileIcon {
+  font-size: 1.3rem; /* Makes icon larger */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profileIcon:hover {
+  color: #ffd700 !important; /* Match other hover effects */
+}

@@ -1,0 +1,112 @@
+:root {
+    --color-dark--1: #2d3439;
+    --color-dark--2: #42484d;
+    --color-light--1: #ffffff;
+    --color-accent: rgb(68, 241, 126);
+  }
+  
+  .contactFormContainer {
+    background: var(--color-dark--1);
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    max-width: 500px;
+    margin: 2rem auto;
+    text-align: center;
+  }
+  
+  .heading {
+    color: var(--color-light--1);
+    font-size: 2.5rem;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+  }
+  
+  .subtext {
+    color: #a3a9b0;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    background-color: var(--color-dark--2);
+    border-radius: 10px;
+    padding: 2rem;
+  }
+  
+  .inputGroup {
+    display: flex;
+    align-items: center;
+    background: rgba(26, 32, 36, 0.6);
+    padding: 1rem 1.2rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(68, 241, 126, 0.1);
+  }
+  
+  .inputGroup:focus-within {
+    border: 1px solid var(--color-accent);
+    box-shadow: 0 0 12px rgba(68, 241, 126, 0.3);
+  }
+  
+  .inputGroup:hover {
+    box-shadow: 0 0 12px rgba(68, 241, 126, 0.2);
+  }
+  
+  .inputGroup i {
+    color: var(--color-accent);
+    font-size: 1.4rem;
+    margin-right: 15px;
+  }
+  
+  .inputGroup input,
+  .inputGroup textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--color-light--1);
+    font-size: 1.1rem;
+    padding: 0.5rem;
+  }
+  
+  .inputGroup input::placeholder,
+  .inputGroup textarea::placeholder {
+    color: #7a8288;
+  }
+  
+  .inputGroup textarea {
+    resize: none;
+    height: 120px;
+    line-height: 1.4;
+  }
+  
+  .submitBtn {
+    background: var(--color-accent);
+    color: var(--color-dark--1);
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .submitBtn:hover {
+    background: #55f39e;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(68, 241, 126, 0.4);
+  }
+  
+  .submitBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(68, 241, 126, 0.3);
+  }

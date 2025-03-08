@@ -1,0 +1,71 @@
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 2rem;
+    background: var(--color-dark--1);
+    border-radius: 8px;
+  }
+  
+  h2, h3 {
+    color: #fff;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .inputGroup label {
+    font-weight: bold;
+    color: #ddd;
+  }
+  
+  .inputGroup input,
+  .inputGroup textarea {
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: none;
+    background: var(--color-dark--2);
+    color: white;
+  }
+  
+  .tasks {
+    margin-top: 1rem;
+  }
+  
+  .taskRow {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .taskRow input {
+    flex: 1;
+  }
+  
+  .addBtn, .removeBtn, .submitBtn {
+    background: rgb(68, 241, 126);
+    color: purple;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .removeBtn {
+    background: rgb(255, 77, 77);
+    color: white;
+  }
+  
+  .submitBtn {
+    width: 100%;
+    font-size: 1rem;
+  }
+  
