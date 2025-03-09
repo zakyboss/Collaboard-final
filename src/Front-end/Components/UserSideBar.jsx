@@ -25,7 +25,9 @@ export default function UserSideBar({ isOpen, onClose }) {
       <div className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
         <div className={styles.sidebarHeader}>
           <h3>User Profile</h3>
-          <button className={styles.closeButton} onClick={onClose}>×</button>
+          <button className={styles.closeButton} onClick={onClose}>
+            ×
+          </button>
         </div>
 
         <div className={styles.userInfo}>
@@ -47,15 +49,21 @@ export default function UserSideBar({ isOpen, onClose }) {
               ></i>
             )}
           </div>
+
           {isAuthenticated ? (
             <>
-              <h4>{user.firstName} {user.lastName}</h4>
+              <h4>
+                {user.firstName} {user.lastName}
+              </h4>
               <p>{user.email}</p>
             </>
           ) : (
             <>
               <h4>Guest</h4>
-              <p>Please <Link to="/login">Login</Link> or <Link to="/signup">Sign Up</Link></p>
+              <p>
+                Please <Link to="/login">Login</Link> or{" "}
+                <Link to="/signup">Sign Up</Link>
+              </p>
             </>
           )}
         </div>
