@@ -1,38 +1,61 @@
-// File: src/Pages/Login.jsx
 import { Link, useNavigate } from "react-router-dom";
 import PageNav from "../Components/PageNav"; // optional if you have a navbar
 import styles from "./Login.module.css";
-import { use, useState } from "react";
+import { useState } from "react"; // Fixed the import (removed 'use')
 import useAuthStore from "../Zustand-api/Authentication";
 
 export default function Login() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // Added error state for better error handling
   const login = useAuthStore((state) => state.login);
   const navigate = useNavigate();
-const {user} = useAuthStore()
+  const { user } = useAuthStore();
+
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    setError(""); // Clear previous errors
+    
     try {
-      const response = await fetch("https://collaboard-php-production.up.railway.app/Login.php", {
+      const apiUrl = "https://collaboard-php-production.up.railway.app/Login.php";
+      console.log("Attempting login to:", apiUrl);
+      
+      const response = await fetch(apiUrl, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
         body: JSON.stringify({ identifier, password }),
       });
-
-      const result = await response.json();
+      
+      // Check if response is ok
+      if (!response.ok) {
+        throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
+      }
+      
+      // Parse response
+      const responseText = await response.text();
+      console.log("Raw response:", responseText);
+      
+      let result;
+      try {
+        result = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error("JSON parse error:", parseError);
+        throw new Error("Invalid response from server");
+      }
+      
       if (result.success) {
         login(result.userData || null);
-        alert("Login successful! Redirecting...");
-          console.log(user)
+        console.log("Login successful, user data:", result.userData);
         navigate("/");
       } else {
-        alert(result.message);
+        setError(result.message || "Login failed");
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error occurred during login.");
+      console.error("Login error:", error);
+      setError(error.message || "An error occurred during login");
     }
   };
 
@@ -41,6 +64,8 @@ const {user} = useAuthStore()
       <PageNav /> {/* optional */}
       <main className={styles.login}>
         <form className={styles.form} onSubmit={handleLogin}>
+          {error && <div className={styles.error}>{error}</div>}
+          
           <div className={styles.row}>
             <label htmlFor="identifier">Email or Username</label>
             <input
