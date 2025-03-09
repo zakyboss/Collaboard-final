@@ -25,12 +25,13 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Check that passwords match
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
 
-    // Create FormData to send the POST request
+    // Create FormData object to send the POST request
     const formDataToSend = new FormData();
     Object.keys(formData).forEach((key) => {
       if (formData[key] !== null && formData[key] !== "") {
@@ -47,7 +48,7 @@ export default function Signup() {
         }
       );
 
-      // Check the raw response in case of errors
+      // Retrieve raw response text for debugging
       const text = await response.text();
       let result;
       try {
