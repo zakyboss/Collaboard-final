@@ -18,6 +18,10 @@ export default function UserSideBar({ isOpen, onClose }) {
     navigate("/edit-profile");
   };
 
+  // Use optional chaining to avoid null errors
+  console.log("User object:", user);
+  console.log("Profile photo:", user?.profilePhoto);
+
   return (
     <>
       {isOpen && <div className={styles.overlay} onClick={onClose}></div>}
@@ -32,9 +36,9 @@ export default function UserSideBar({ isOpen, onClose }) {
 
         <div className={styles.userInfo}>
           <div className={styles.avatarContainer}>
-            {isAuthenticated && user?.profile_photo ? (
+            {isAuthenticated && user?.profilePhoto ? (
               <img
-                src={`https://collaboard-php-production.up.railway.app/uploads/${user.profile_photo}`}
+                src={`https://collaboard-php-production.up.railway.app/uploads/${user.profilePhoto}`}
                 alt="Profile"
                 className={styles.avatar}
               />
@@ -53,9 +57,9 @@ export default function UserSideBar({ isOpen, onClose }) {
           {isAuthenticated ? (
             <>
               <h4>
-                {user.firstName} {user.lastName}
+                {user?.firstName} {user?.lastName}
               </h4>
-              <p>{user.email}</p>
+              <p>{user?.email}</p>
             </>
           ) : (
             <>
@@ -97,13 +101,11 @@ export default function UserSideBar({ isOpen, onClose }) {
             )}
 
             {!isAuthenticated && (
-              <>
-                <li>
-                  <Link to="/login" onClick={onClose}>
-                    <i className="fas fa-user"></i> Login
-                  </Link>
-                </li>
-              </>
+              <li>
+                <Link to="/login" onClick={onClose}>
+                  <i className="fas fa-user"></i> Login
+                </Link>
+              </li>
             )}
           </ul>
         </nav>
