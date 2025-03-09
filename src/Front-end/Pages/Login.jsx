@@ -3,11 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import PageNav from "../Components/PageNav"; // optional if you have a navbar
 import styles from "./Login.module.css";
 import { useState } from "react";
-// import useAuthStore from "../Zustand-api/useAuthStore";
 import useAuthStore from "../Zustand-api/Authentication";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const login = useAuthStore((state) => state.login);
   const navigate = useNavigate();
@@ -16,10 +15,10 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch( "https://collaboard-php-production.up.railway.app/Login.php", {
+      const response = await fetch("https://collaboard-php-production.up.railway.app/Login.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ identifier, password }),
       });
 
       const result = await response.json();
@@ -42,12 +41,12 @@ export default function Login() {
       <main className={styles.login}>
         <form className={styles.form} onSubmit={handleLogin}>
           <div className={styles.row}>
-            <label htmlFor="email">Email address</label>
+            <label htmlFor="identifier">Email or Username</label>
             <input
-              type="email"
-              id="email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
+              type="text"
+              id="identifier"
+              onChange={(e) => setIdentifier(e.target.value)}
+              value={identifier}
               required
             />
           </div>
