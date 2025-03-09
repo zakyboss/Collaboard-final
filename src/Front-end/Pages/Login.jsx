@@ -2,7 +2,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import PageNav from "../Components/PageNav"; // optional if you have a navbar
 import styles from "./Login.module.css";
-import { useState } from "react";
+import { use, useState } from "react";
 import useAuthStore from "../Zustand-api/Authentication";
 
 export default function Login() {
@@ -10,7 +10,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const login = useAuthStore((state) => state.login);
   const navigate = useNavigate();
-
+const {user} = useAuthStore()
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -25,6 +25,7 @@ export default function Login() {
       if (result.success) {
         login(result.userData || null);
         alert("Login successful! Redirecting...");
+          console.log(user)
         navigate("/");
       } else {
         alert(result.message);
