@@ -1,4 +1,3 @@
-// File: src/Pages/Signup.jsx
 import React, { useState } from "react";
 import styles from "./Signup.module.css";
 import { useNavigate } from "react-router";
@@ -31,6 +30,7 @@ export default function Signup() {
       return;
     }
 
+    // Create FormData to send the POST request
     const formDataToSend = new FormData();
     Object.keys(formData).forEach((key) => {
       if (formData[key] !== null && formData[key] !== "") {
@@ -47,7 +47,16 @@ export default function Signup() {
         }
       );
 
-      const result = await response.json();
+      // Check the raw response in case of errors
+      const text = await response.text();
+      let result;
+      try {
+        result = JSON.parse(text);
+      } catch (err) {
+        alert("Server returned invalid JSON. Response:\n" + text);
+        return;
+      }
+
       if (result.success) {
         alert("Registration successful!");
         navigate("/login");
