@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
+    username: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -74,6 +75,16 @@ export default function Signup() {
     <div className={styles.signupContainer}>
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
+        {/* Username Field */}
+        <label>Username</label>
+        <input
+          type="text"
+          name="username"
+          onChange={handleChange}
+          value={formData.username}
+          required
+        />
+
         <label>First Name</label>
         <input
           type="text"
