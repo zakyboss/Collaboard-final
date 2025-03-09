@@ -1,67 +1,74 @@
 import { Link, useNavigate } from "react-router-dom";
-import PageNav from "../Components/PageNav"; // optional if you have a navbar
+import PageNav from "../Components/PageNav";
 import styles from "./Login.module.css";
-import { useState } from "react"; // Fixed the import (removed 'use')
+import { useState } from "react"; // Fixed import, removed 'use'
 import useAuthStore from "../Zustand-api/Authentication";
 
 export default function Login() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // Added error state for better error handling
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  
   const login = useAuthStore((state) => state.login);
   const navigate = useNavigate();
-  const { user } = useAuthStore();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); // Clear previous errors
+    setLoading(true);
+    setError("");
     
     try {
-      const apiUrl = "https://collaboard-php-production.up.railway.app/Login.php";
-      console.log("Attempting login to:", apiUrl);
+      // Create the request payload
+      const payload = {
+        identifier: identifier.trim(),
+        password: password.trim()
+      };
       
-      const response = await fetch(apiUrl, {
+      console.log("Sending login request with:", JSON.stringify(payload));
+      
+      const response = await fetch("https://collaboard-php-production.up.railway.app/Login.php", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
           "Accept": "application/json"
         },
-        body: JSON.stringify({ identifier, password }),
+        body: JSON.stringify(payload),
       });
       
-      // Check if response is ok
-      if (!response.ok) {
-        throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
-      }
-      
-      // Parse response
+      // Get the raw response text first for debugging
       const responseText = await response.text();
-      console.log("Raw response:", responseText);
+      console.log("Raw server response:", responseText);
       
+      // Try to parse the response as JSON
       let result;
       try {
         result = JSON.parse(responseText);
       } catch (parseError) {
-        console.error("JSON parse error:", parseError);
-        throw new Error("Invalid response from server");
+        console.error("Failed to parse server response as JSON:", parseError);
+        throw new Error("Server returned invalid data. Please try again later.");
       }
       
       if (result.success) {
-        login(result.userData || null);
+        // Login successful
         console.log("Login successful, user data:", result.userData);
+        login(result.userData);
         navigate("/");
       } else {
-        setError(result.message || "Login failed");
+        // Login failed with a message from the server
+        setError(result.message || "Login failed. Please check your credentials.");
       }
     } catch (error) {
       console.error("Login error:", error);
-      setError(error.message || "An error occurred during login");
+      setError(error.message || "An error occurred during login. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div>
-      <PageNav /> {/* optional */}
+      <PageNav />
       <main className={styles.login}>
         <form className={styles.form} onSubmit={handleLogin}>
           {error && <div className={styles.error}>{error}</div>}
@@ -89,13 +96,17 @@ export default function Login() {
           </div>
 
           <div>
-            <button className={styles.btn} type="submit">
-              Login
+            <button 
+              className={styles.btn} 
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? "Logging in..." : "Login"}
             </button>
             <p className={styles.signupText}>
               Don't have an account?{" "}
               <Link to="/signup">
-                <button className={styles.signupBtn}>Signup</button>
+                <button className={styles.signupBtn} type="button">Signup</button>
               </Link>
             </p>
           </div>
