@@ -1,6 +1,6 @@
-// File: src/Front-end/Pages/VolunteerForm.jsx
 import React, { useState } from "react";
 import useAuthStore from "../Zustand-api/Authentication";
+import styles from "./VolunteerForm.module.css";
 
 export default function VolunteerForm({ projId, tasks, onClose }) {
   const { user, isAuthenticated } = useAuthStore();
@@ -33,7 +33,7 @@ export default function VolunteerForm({ projId, tasks, onClose }) {
       const result = await response.json();
       if (result.success) {
         alert("You have volunteered successfully!");
-        onClose();
+        if (onClose) onClose(); // Notify parent to update volunteer status
       } else {
         alert(result.message);
       }
@@ -44,21 +44,26 @@ export default function VolunteerForm({ projId, tasks, onClose }) {
   };
 
   return (
-    <div style={styles.overlay}>
-      <div style={styles.modal}>
-        <button style={styles.closeBtn} onClick={onClose}>✖</button>
-        <h2>Volunteer</h2>
+    <div className={styles.overlay}>
+      <div className={styles.modal}>
+        <button className={styles.closeBtn} onClick={onClose}>
+          ✖
+        </button>
+        <h2 className={styles.title}>Volunteer</h2>
+
         <form onSubmit={handleSubmit}>
-          <label>GitHub Username</label>
+          <label className={styles.formLabel}>GitHub Username</label>
           <input
             type="text"
+            className={styles.formInput}
             value={githubUsername}
             onChange={(e) => setGithubUsername(e.target.value)}
             required
           />
 
-          <label>Select Task (Optional)</label>
+          <label className={styles.formLabel}>Select Task (Optional)</label>
           <select
+            className={styles.formInput}
             value={selectedTask}
             onChange={(e) => setSelectedTask(e.target.value)}
           >
@@ -70,38 +75,11 @@ export default function VolunteerForm({ projId, tasks, onClose }) {
             ))}
           </select>
 
-          <button type="submit">Submit</button>
+          <button type="submit" className={styles.submitButton}>
+            Submit
+          </button>
         </form>
       </div>
     </div>
   );
 }
-
-const styles = {
-  overlay: {
-    position: "fixed",
-    top: 0, left: 0, width: "100%", height: "100%",
-    backgroundColor: "rgba(0,0,0,0.7)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 9999,
-  },
-  modal: {
-    backgroundColor: "#fff",
-    color: "#000",
-    padding: "2rem",
-    borderRadius: "8px",
-    width: "400px",
-    position: "relative",
-  },
-  closeBtn: {
-    position: "absolute",
-    top: "10px",
-    right: "10px",
-    background: "transparent",
-    border: "none",
-    fontSize: "1.2rem",
-    cursor: "pointer",
-  },
-};

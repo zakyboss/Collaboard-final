@@ -28,8 +28,12 @@ export default function YourProjects() {
   }, [isAuthenticated, fetchProjects, navigate]);
 
   // Filter only user's projects
-  const userProjects = projects.filter((p) => p.user_id === user?.id);
-
+  const userProjects = projects.filter(
+    (p) => Number(p.user_id) === Number(user?.id)
+  );
+  console.log(userProjects);
+  console.log(user);
+  console.log(projects);
   const handleCardClick = (project) => {
     selectProject(project);
   };

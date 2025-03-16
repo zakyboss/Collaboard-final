@@ -1,28 +1,45 @@
-// File: src/Front-end/Pages/VolunteersList.jsx
 import React, { useState, useEffect } from "react";
+import styles from "./VolunteersList.module.css";
 
-export default function VolunteersList({ projId, onClose }) {
+/**
+ * A sub-modal that shows:
+ *  - A list of volunteers for this project
+ *  - The tasks they want to do
+ *  - A checkbox to approve them
+ *  - A text field to update the WhatsApp link
+ */
+export default function VolunteersList({
+  projId,
+  onClose,
+  isCreator = false,
+  whatsappLink = "",
+  onUpdateWhatsAppLink,
+}) {
   const [volunteers, setVolunteers] = useState([]);
+  const [localWhatsAppLink, setLocalWhatsAppLink] = useState(whatsappLink);
 
   useEffect(() => {
     fetchVolunteers();
-  }, []);
+    // eslint-disable-next-line
+  }, [projId]);
 
-  const fetchVolunteers = async () => {
+  // 1) Fetch volunteers from DB
+  async function fetchVolunteers() {
     try {
       const response = await fetch(
-       `https://collaboard-php-production.up.railway.app/GetVolunteers.php?proj_id=${projId}`
+        `https://collaboard-php-production.up.railway.app/GetVolunteers.php?proj_id=${projId}`
       );
       const data = await response.json();
       setVolunteers(data.volunteers || []);
     } catch (error) {
       console.error("Error fetching volunteers:", error);
     }
-  };
+  }
 
-  const handleApprove = async (volunteer_id, approve) => {
+  // 2) Approve/unapprove volunteer
+  async function handleCollaboratorChange(volunteer_id, checked) {
     try {
-      const payload = { volunteer_id, approve };
+      const payload = { volunteer_id, approve: checked ? 1 : 0 };
       const response = await fetch(
         "https://collaboard-php-production.up.railway.app/ApproveVolunteer.php",
         {
@@ -33,69 +50,81 @@ export default function VolunteersList({ projId, onClose }) {
       );
       const result = await response.json();
       if (result.success) {
+        // Refresh volunteers
         fetchVolunteers();
       } else {
         alert(result.message);
       }
     } catch (error) {
-      console.error("Error approving volunteer:", error);
+      console.error("Error updating collaborator status:", error);
     }
-  };
+  }
+
+  // 3) Save updated WhatsApp link
+  function handleSaveWhatsAppLink() {
+    if (onUpdateWhatsAppLink) {
+      onUpdateWhatsAppLink(localWhatsAppLink);
+    }
+  }
 
   return (
-    <div style={styles.overlay}>
-      <div style={styles.modal}>
-        <button style={styles.closeBtn} onClick={onClose}>✖</button>
-        <h2>Volunteers</h2>
-        <ul>
-          {volunteers.map((v) => (
-            <li key={v.volunteer_id} style={styles.item}>
-              <strong>{v.first_name} {v.last_name}</strong>
-              <br /> GitHub: {v.github_username}
-              <br /> Approved: {v.is_approved ? "Yes" : "No"}
-              <div style={styles.actions}>
-                <button onClick={() => handleApprove(v.volunteer_id, 1)}>Approve</button>
-                <button onClick={() => handleApprove(v.volunteer_id, 0)}>Unapprove</button>
-              </div>
-            </li>
-          ))}
-        </ul>
+    <div className={styles.overlay}>
+      <div className={styles.modal}>
+        <button className={styles.closeBtn} onClick={onClose}>
+          ✖
+        </button>
+        <h2 className={styles.title}>Volunteers</h2>
+
+        <table className={styles.volunteerTable}>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>GitHub</th>
+              <th>Task ID</th>
+              <th>Approved?</th>
+            </tr>
+          </thead>
+          <tbody>
+            {volunteers.map((v) => (
+              <tr key={v.volunteer_id}>
+                <td>{v.first_name} {v.last_name}</td>
+                <td>{v.github_username}</td>
+                <td>{v.task_id || "None"}</td>
+                <td>
+                  {isCreator ? (
+                    <input
+                      type="checkbox"
+                      checked={v.is_approved === "1" || v.is_approved === 1}
+                      onChange={(e) =>
+                        handleCollaboratorChange(v.volunteer_id, e.target.checked)
+                      }
+                    />
+                  ) : (
+                    v.is_approved ? "Yes" : "No"
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {isCreator && (
+          <div className={styles.whatsappSection}>
+            <label className={styles.whatsappLabel}>
+              WhatsApp Group Link:
+            </label>
+            <input
+              type="text"
+              className={styles.whatsappInput}
+              value={localWhatsAppLink}
+              onChange={(e) => setLocalWhatsAppLink(e.target.value)}
+            />
+            <button className={styles.saveButton} onClick={handleSaveWhatsAppLink}>
+              Save Link
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
 }
-
-const styles = {
-  overlay: {
-    position: "fixed",
-    top: 0, left: 0, width: "100%", height: "100%",
-    backgroundColor: "rgba(0,0,0,0.7)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 9999,
-  },
-  modal: {
-    backgroundColor: "#fff",
-    color: "#000",
-    padding: "2rem",
-    borderRadius: "8px",
-    width: "500px",
-    position: "relative",
-  },
-  closeBtn: {
-    position: "absolute",
-    top: "10px",
-    right: "10px",
-    background: "transparent",
-    border: "none",
-    fontSize: "1.2rem",
-    cursor: "pointer",
-  },
-  item: {
-    marginBottom: "1rem",
-  },
-  actions: {
-    marginTop: "0.5rem",
-  },
-};

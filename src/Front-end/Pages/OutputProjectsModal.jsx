@@ -12,7 +12,7 @@ import VolunteerForm from "./VolunteerForm";
 
 export default function OutputProjectsModal({ onClose }) {
   const { selectedProject, updateProject } = useProjects();
-
+  // console.log(selectedProject);
   const { user, isAuthenticated } = useAuthStore();
 
   const [tasks, setTasks] = useState([]);

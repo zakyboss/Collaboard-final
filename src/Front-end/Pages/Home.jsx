@@ -57,7 +57,7 @@ export default function Home() {
       </div>
 
       {/* Projects Section */}
-      <h1 className={styles.heading}>Projects</h1>
+      {/* <h1 className={styles.heading}>Projects</h1> */}
       <OutputProjects />
 
       {/* Footer at the bottom */}

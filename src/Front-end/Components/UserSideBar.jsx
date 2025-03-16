@@ -38,7 +38,9 @@ export default function UserSideBar({ isOpen, onClose }) {
           <div className={styles.avatarContainer}>
             {isAuthenticated && user?.profilePhoto ? (
               <img
-                src={`https://collaboard-php-production.up.railway.app/uploads/${user.profilePhoto}`}
+                src={`https://collaboard-php-production.up.railway.app/ProfileUploads/${encodeURIComponent(
+                  user?.profilePhoto
+                )}`}
                 alt="Profile"
                 className={styles.avatar}
               />

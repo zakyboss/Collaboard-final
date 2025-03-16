@@ -10,7 +10,8 @@ export default function CreateProjects() {
 
   const [projectName, setProjectName] = useState("");
   const [description, setDescription] = useState("");
-  const [tasks, setTasks] = useState([{ task_name: "", duration: "" }]);
+  // Each task has task_name and task_description
+  const [tasks, setTasks] = useState([{ task_name: "", task_description: "" }]);
   const [thumbnail, setThumbnail] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
   const [devNeeded, setDevNeeded] = useState(1);
@@ -30,7 +31,7 @@ export default function CreateProjects() {
   };
 
   const addTask = () => {
-    setTasks([...tasks, { task_name: "", duration: "" }]);
+    setTasks([...tasks, { task_name: "", task_description: "" }]);
   };
 
   const removeTask = (index) => {
@@ -72,7 +73,7 @@ export default function CreateProjects() {
         alert("Project created successfully!");
         setProjectName("");
         setDescription("");
-        setTasks([{ task_name: "", duration: "" }]);
+        setTasks([{ task_name: "", task_description: "" }]);
         setThumbnail(null);
         setPdfFile(null);
         setDevNeeded(1);
@@ -143,15 +144,18 @@ export default function CreateProjects() {
               type="text"
               placeholder="Task Name"
               value={task.task_name}
-              onChange={(e) => handleTaskChange(index, "task_name", e.target.value)}
+              onChange={(e) =>
+                handleTaskChange(index, "task_name", e.target.value)
+              }
               required
             />
             <input
               type="text"
-              placeholder="Duration (days)"
-              value={task.duration}
-              onChange={(e) => handleTaskChange(index, "duration", e.target.value)}
-              required
+              placeholder="Task Description"
+              value={task.task_description}
+              onChange={(e) =>
+                handleTaskChange(index, "task_description", e.target.value)
+              }
             />
             <button type="button" onClick={() => removeTask(index)}>
               ✖
