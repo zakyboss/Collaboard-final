@@ -1,9 +1,9 @@
+// File: src/Front-end/Components/NonCreatorProjectModal.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../Zustand-api/Authentication";
 import { fetchTasksForProject } from "../../utils/taskAPI";
 import VolunteerForm from "./VolunteerForm";
-
 import styles from "./NonCreatorProjectModal.module.css";
 
 export default function NonCreatorProjectModal({ project, onClose }) {
@@ -15,11 +15,20 @@ export default function NonCreatorProjectModal({ project, onClose }) {
   // volunteerStatus can be "none", "pending", or "approved"
   const [volunteerStatus, setVolunteerStatus] = useState("none");
 
+  // Load tasks and poll volunteer status every 5 seconds
   useEffect(() => {
     loadTasks(project.proj_id);
+    let intervalId;
     if (isAuthenticated) {
+      // Check immediately
       loadVolunteerStatus();
+      // Then poll every 5 seconds
+      intervalId = setInterval(loadVolunteerStatus, 5000);
     }
+    // Cleanup the interval on unmount
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
   }, [project.proj_id, isAuthenticated]);
 
   async function loadTasks(proj_id) {
@@ -120,10 +129,13 @@ export default function NonCreatorProjectModal({ project, onClose }) {
             </button>
           )}
           {volunteerStatus === "pending" && (
-            <div className={styles.pendingLabel}>Pending</div>
+            <div className={styles.pendingLabel}>Pending...</div>
           )}
           {volunteerStatus === "approved" && (
-            <button className={styles.actionButton} onClick={handleMessagesClick}>
+            <button
+              className={styles.actionButton}
+              onClick={handleMessagesClick}
+            >
               <i className="fas fa-comments"></i> Messages
             </button>
           )}

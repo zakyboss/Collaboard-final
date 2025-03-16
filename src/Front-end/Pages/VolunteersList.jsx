@@ -1,3 +1,4 @@
+// File: src/Front-end/Components/VolunteersList.jsx
 import React, { useState, useEffect } from "react";
 import styles from "./VolunteersList.module.css";
 
@@ -78,6 +79,7 @@ export default function VolunteersList({
         <table className={styles.volunteerTable}>
           <thead>
             <tr>
+              <th>Photo</th>
               <th>Name</th>
               <th>GitHub</th>
               <th>Task ID</th>
@@ -87,9 +89,27 @@ export default function VolunteersList({
           <tbody>
             {volunteers.map((v) => (
               <tr key={v.volunteer_id}>
-                <td>{v.first_name} {v.last_name}</td>
+                {/* Photo */}
+                <td>
+                  <img
+                    src={`https://collaboard-php-production.up.railway.app/ProfileUploads/${v.profile_photo}`}
+                    alt="Volunteer"
+                    style={{ width: "50px", height: "50px", objectFit: "cover" }}
+                  />
+                </td>
+
+                {/* Name */}
+                <td>
+                  {v.first_name} {v.last_name}
+                </td>
+
+                {/* GitHub */}
                 <td>{v.github_username}</td>
+
+                {/* Task */}
                 <td>{v.task_id || "None"}</td>
+
+                {/* Approved? */}
                 <td>
                   {isCreator ? (
                     <input
@@ -108,11 +128,10 @@ export default function VolunteersList({
           </tbody>
         </table>
 
+        {/* If creator, show the WhatsApp link editing */}
         {isCreator && (
           <div className={styles.whatsappSection}>
-            <label className={styles.whatsappLabel}>
-              WhatsApp Group Link:
-            </label>
+            <label className={styles.whatsappLabel}>WhatsApp Group Link:</label>
             <input
               type="text"
               className={styles.whatsappInput}

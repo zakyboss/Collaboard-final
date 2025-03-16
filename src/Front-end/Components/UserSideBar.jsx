@@ -21,7 +21,7 @@ export default function UserSideBar({ isOpen, onClose }) {
   // Use optional chaining to avoid null errors
   console.log("User object:", user);
   console.log("Profile photo:", user?.profilePhoto);
-
+  console.log(isAuthenticated);
   return (
     <>
       {isOpen && <div className={styles.overlay} onClick={onClose}></div>}
