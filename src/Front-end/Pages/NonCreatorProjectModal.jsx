@@ -67,7 +67,8 @@ export default function NonCreatorProjectModal({ project, onClose }) {
   // When approved, clicking messages shows the WhatsApp group link
   const handleMessagesClick = () => {
     if (project.whatsapp_link) {
-      alert(`Join the WhatsApp group: ${project.whatsapp_link}`);
+      // Open the link in a new tab
+      window.open(project.whatsapp_link, "_blank");
     } else {
       alert("No WhatsApp group link has been set for this project.");
     }
@@ -99,9 +100,13 @@ export default function NonCreatorProjectModal({ project, onClose }) {
         {/* Display project thumbnail (from "uploads") unconditionally */}
         {project.thumbnail && (
           <img
-            src={`https://collaboard-php-production.up.railway.app/uploads/${project.thumbnail}`}
+            src={project.thumbnail}
             alt="Project Thumbnail"
-            style={{ width: "100%", maxWidth: "400px", marginBottom: "10px" }}
+            style={{
+              width: "100%",
+              maxWidth: "400px",
+              marginBottom: "10px",
+            }}
           />
         )}
 

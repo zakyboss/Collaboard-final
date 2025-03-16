@@ -175,16 +175,16 @@ export default function CreatorProjectModal({ project, onClose }) {
 
         {/* Display project thumbnail unconditionally */}
         {project.thumbnail && (
-          <img
-            src={`https://collaboard-php-production.up.railway.app/uploads/${project.thumbnail}`}
-            alt="Project Thumbnail"
-            style={{
-              width: "100%",
-              maxWidth: "400px",
-              marginBottom: "10px",
-            }}
-          />
-        )}
+  <img
+    src={project.thumbnail}
+    alt="Project Thumbnail"
+    style={{
+      width: "100%",
+      maxWidth: "400px",
+      marginBottom: "10px",
+    }}
+  />
+)}
 
         {/* If not editing and not showing volunteers sub-modal */}
         {!editMode && !showVolunteers && (

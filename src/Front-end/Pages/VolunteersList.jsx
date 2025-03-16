@@ -32,6 +32,7 @@ export default function VolunteersList({
       );
       const data = await response.json();
       setVolunteers(data.volunteers || []);
+      console.log(volunteers);
     } catch (error) {
       console.error("Error fetching volunteers:", error);
     }
@@ -94,7 +95,11 @@ export default function VolunteersList({
                   <img
                     src={`https://collaboard-php-production.up.railway.app/ProfileUploads/${v.profile_photo}`}
                     alt="Volunteer"
-                    style={{ width: "50px", height: "50px", objectFit: "cover" }}
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      objectFit: "cover",
+                    }}
                   />
                 </td>
 
@@ -116,11 +121,16 @@ export default function VolunteersList({
                       type="checkbox"
                       checked={v.is_approved === "1" || v.is_approved === 1}
                       onChange={(e) =>
-                        handleCollaboratorChange(v.volunteer_id, e.target.checked)
+                        handleCollaboratorChange(
+                          v.volunteer_id,
+                          e.target.checked
+                        )
                       }
                     />
+                  ) : v.is_approved ? (
+                    "Yes"
                   ) : (
-                    v.is_approved ? "Yes" : "No"
+                    "No"
                   )}
                 </td>
               </tr>
@@ -138,7 +148,10 @@ export default function VolunteersList({
               value={localWhatsAppLink}
               onChange={(e) => setLocalWhatsAppLink(e.target.value)}
             />
-            <button className={styles.saveButton} onClick={handleSaveWhatsAppLink}>
+            <button
+              className={styles.saveButton}
+              onClick={handleSaveWhatsAppLink}
+            >
               Save Link
             </button>
           </div>

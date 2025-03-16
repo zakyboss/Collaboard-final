@@ -45,19 +45,22 @@ export default function CreateProjects() {
       return;
     }
 
+    // Build multipart form data
     const formData = new FormData();
-    formData.append("projectName", projectName);
+    // MATCHES PHP: use "projName" (instead of "projectName")
+    formData.append("projName", projectName);
     formData.append("description", description);
-    formData.append("tasks", JSON.stringify(tasks));
+    formData.append("tasks", JSON.stringify(tasks)); // Not currently handled by your PHP
     formData.append("devNeeded", devNeeded);
     formData.append("daysToComplete", daysToComplete);
-    formData.append("userId", user.id); // ***IMPORTANT***
+    formData.append("userId", user.id); // The PHP checks $data["user_id"] ?? $data["userId"]
 
     if (thumbnail) {
       formData.append("thumbnail", thumbnail);
     }
+    // MATCHES PHP: use "pdf_file" (instead of "pdfFile")
     if (pdfFile) {
-      formData.append("pdfFile", pdfFile);
+      formData.append("pdf_file", pdfFile);
     }
 
     try {

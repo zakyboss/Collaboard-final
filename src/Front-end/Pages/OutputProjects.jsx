@@ -48,9 +48,13 @@ export default function OutputProjects() {
             >
               {project.thumbnail && (
                 <img
-                  src={`https://collaboard-php-production.up.railway.app/uploads/${project.thumbnail}`}
+                  src={project.thumbnail}
                   alt="Project Thumbnail"
-                  className={styles.thumbnail}
+                  style={{
+                    width: "100%",
+                    maxWidth: "400px",
+                    marginBottom: "10px",
+                  }}
                 />
               )}
               <h3 className={styles.cardTitle}>{project.proj_name}</h3>
