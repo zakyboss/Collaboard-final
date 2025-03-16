@@ -1,3 +1,4 @@
+// File: src/Front-end/Components/CreatorProjectModal.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import useAuthStore from "../Zustand-api/Authentication";
@@ -171,6 +172,19 @@ export default function CreatorProjectModal({ project, onClose }) {
         <button className={styles.closeButton} onClick={onClose}>
           ✖
         </button>
+
+        {/* Display project thumbnail unconditionally */}
+        {project.thumbnail && (
+          <img
+            src={`https://collaboard-php-production.up.railway.app/uploads/${project.thumbnail}`}
+            alt="Project Thumbnail"
+            style={{
+              width: "100%",
+              maxWidth: "400px",
+              marginBottom: "10px",
+            }}
+          />
+        )}
 
         {/* If not editing and not showing volunteers sub-modal */}
         {!editMode && !showVolunteers && (

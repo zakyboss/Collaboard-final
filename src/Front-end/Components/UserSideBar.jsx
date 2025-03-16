@@ -18,10 +18,9 @@ export default function UserSideBar({ isOpen, onClose }) {
     navigate("/edit-profile");
   };
 
-  // Use optional chaining to avoid null errors
   console.log("User object:", user);
   console.log("Profile photo:", user?.profilePhoto);
-  console.log(isAuthenticated);
+
   return (
     <>
       {isOpen && <div className={styles.overlay} onClick={onClose}></div>}
@@ -37,10 +36,9 @@ export default function UserSideBar({ isOpen, onClose }) {
         <div className={styles.userInfo}>
           <div className={styles.avatarContainer}>
             {isAuthenticated && user?.profilePhoto ? (
+              // It's already a data URI
               <img
-                src={`https://collaboard-php-production.up.railway.app/ProfileUploads/${encodeURIComponent(
-                  user?.profilePhoto
-                )}`}
+                src={user.profilePhoto}
                 alt="Profile"
                 className={styles.avatar}
               />

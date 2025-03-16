@@ -15,20 +15,11 @@ export default function NonCreatorProjectModal({ project, onClose }) {
   // volunteerStatus can be "none", "pending", or "approved"
   const [volunteerStatus, setVolunteerStatus] = useState("none");
 
-  // Load tasks and poll volunteer status every 5 seconds
   useEffect(() => {
     loadTasks(project.proj_id);
-    let intervalId;
     if (isAuthenticated) {
-      // Check immediately
       loadVolunteerStatus();
-      // Then poll every 5 seconds
-      intervalId = setInterval(loadVolunteerStatus, 5000);
     }
-    // Cleanup the interval on unmount
-    return () => {
-      if (intervalId) clearInterval(intervalId);
-    };
   }, [project.proj_id, isAuthenticated]);
 
   async function loadTasks(proj_id) {
@@ -44,7 +35,10 @@ export default function NonCreatorProjectModal({ project, onClose }) {
       );
       const data = await response.json();
       const volunteers = data.volunteers || [];
-      const volunteer = volunteers.find((v) => v.user_id === user.id);
+      // Compare user IDs as strings to avoid type issues
+      const volunteer = volunteers.find(
+        (v) => String(v.user_id) === String(user.id)
+      );
       if (volunteer) {
         if (volunteer.is_approved === "1" || volunteer.is_approved === 1) {
           setVolunteerStatus("approved");
@@ -62,6 +56,7 @@ export default function NonCreatorProjectModal({ project, onClose }) {
 
   function handleDownloadPDF() {
     if (project.pdf_file) {
+      // PDF files are stored in "/uploads"
       window.open(
         `https://collaboard-php-production.up.railway.app/uploads/${project.pdf_file}`,
         "_blank"
@@ -81,12 +76,14 @@ export default function NonCreatorProjectModal({ project, onClose }) {
   // Callback after volunteer form submission
   const onVolunteerSuccess = () => {
     setShowVolunteerForm(false);
+    // After volunteering, set status to pending (unless auto-approved)
     setVolunteerStatus("pending");
   };
 
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
+        {/* Show volunteer form if user clicks "Volunteer" */}
         {showVolunteerForm && (
           <VolunteerForm
             projId={project.proj_id}
@@ -99,7 +96,18 @@ export default function NonCreatorProjectModal({ project, onClose }) {
           ✖
         </button>
 
-        <h2 className={styles.modalTitle}>{project.proj_name}</h2>
+        {/* Display project thumbnail (from "uploads") unconditionally */}
+        {project.thumbnail && (
+          <img
+            src={`https://collaboard-php-production.up.railway.app/uploads/${project.thumbnail}`}
+            alt="Project Thumbnail"
+            style={{ width: "100%", maxWidth: "400px", marginBottom: "10px" }}
+          />
+        )}
+
+        <h2 className={styles.modalTitle} style={{ color: "black" }}>
+          {project.proj_name}
+        </h2>
         <p className={styles.modalDescription}>{project.description}</p>
 
         {project.pdf_file && (
@@ -108,12 +116,14 @@ export default function NonCreatorProjectModal({ project, onClose }) {
           </button>
         )}
 
-        <h3 className={styles.tasksTitle}>Tasks</h3>
+        <h3 className={styles.tasksTitle} style={{ color: "black" }}>
+          Tasks
+        </h3>
         <ul className={styles.taskList}>
           {tasks.map((task) => (
             <li key={task.task_id} className={styles.taskItem}>
-              {task.is_done === 1 ? "✓" : "✗"}{" "}
-              <strong>{task.task_name}</strong> - {task.duration} days
+              {task.is_done == 1 ? "✓" : "✗"} <strong>{task.task_name}</strong>{" "}
+              - {task.duration} days
             </li>
           ))}
         </ul>
@@ -129,7 +139,7 @@ export default function NonCreatorProjectModal({ project, onClose }) {
             </button>
           )}
           {volunteerStatus === "pending" && (
-            <div className={styles.pendingLabel}>Pending...</div>
+            <div className={styles.pendingLabel}>Pending</div>
           )}
           {volunteerStatus === "approved" && (
             <button
