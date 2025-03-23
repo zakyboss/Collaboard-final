@@ -1,5 +1,3 @@
-// File: src/Front-end/Pages/Home.jsx
-
 import React, { useState, useEffect } from "react";
 import styles from "./Home.module.css";
 import PageNav from "../Components/PageNav";
@@ -12,20 +10,38 @@ export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Replace these with your actual image paths in public/ folder
-  const images = [
-    "/image1.png",
-    "/image2.png",
-    "/image3.png",
+  const slides = [
+    {
+      image: "/image1.png",
+      title: "Welcome to Our Portfolio",
+      subtitle: "Discover amazing projects and creative solutions",
+      buttonText: "Explore Now",
+      buttonLink: "/projects"
+    },
+    {
+      image: "/image2.png",
+      title: "Creative Design Solutions",
+      subtitle: "Transforming ideas into stunning visual experiences",
+      buttonText: "View Designs",
+      buttonLink: "/designs"
+    },
+    {
+      image: "/image3.png",
+      title: "Let's Work Together",
+      subtitle: "Building the future through collaboration and innovation",
+      buttonText: "Contact Us",
+      buttonLink: "/contact"
+    },
   ];
 
   // Move to the next slide
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
   };
 
   // Move to the previous slide
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
   };
 
   // Auto-slide every 5 seconds
@@ -36,7 +52,6 @@ export default function Home() {
 
   return (
     <div>
-      {/* Your navigation bar at the top */}
       <PageNav />
 
       {/* Carousel container */}
@@ -46,10 +61,17 @@ export default function Home() {
         </button>
         <div className={styles.slide}>
           <img
-            src={images[currentIndex]}
+            src={slides[currentIndex].image}
             alt={`Slide ${currentIndex + 1}`}
             className={styles.image}
           />
+          <div className={styles.textOverlay}>
+            <h1 className={styles.slideTitle}>{slides[currentIndex].title}</h1>
+            <p className={styles.slideSubtitle}>{slides[currentIndex].subtitle}</p>
+            <a href={slides[currentIndex].buttonLink} className={styles.slideButton}>
+              {slides[currentIndex].buttonText}
+            </a>
+          </div>
         </div>
         <button className={styles.nextButton} onClick={nextSlide}>
           &#10095;
@@ -57,7 +79,6 @@ export default function Home() {
       </div>
 
       {/* Projects Section */}
-      {/* <h1 className={styles.heading}>Projects</h1> */}
       <OutputProjects />
 
       {/* Footer at the bottom */}
