@@ -1,71 +1,88 @@
 .container {
-    max-width: 600px;
-    margin: auto;
-    padding: 2rem;
-    background: var(--color-dark--1);
-    border-radius: 8px;
-  }
-  
-  h2, h3 {
-    color: #fff;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  
-  .inputGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .inputGroup label {
-    font-weight: bold;
-    color: #ddd;
-  }
-  
-  .inputGroup input,
-  .inputGroup textarea {
-    padding: 0.5rem;
-    border-radius: 5px;
-    border: none;
-    background: var(--color-dark--2);
-    color: white;
-  }
-  
-  .tasks {
-    margin-top: 1rem;
-  }
-  
-  .taskRow {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-  }
-  
-  .taskRow input {
-    flex: 1;
-  }
-  
-  .addBtn, .removeBtn, .submitBtn {
-    background: rgb(68, 241, 126);
-    color: purple;
-    border: none;
-    padding: 8px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .removeBtn {
-    background: rgb(255, 77, 77);
-    color: white;
-  }
-  
-  .submitBtn {
-    width: 100%;
-    font-size: 1rem;
-  }
-  
+  max-width: 600px;
+  margin: auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #1e1e1e, #252525);
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+h2, h3 {
+  color: #4af626;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.inputGroup label {
+  font-weight: bold;
+  color: #ddd;
+}
+
+.inputGroup input,
+.inputGroup textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #333;
+  color: white;
+  font-size: 1rem;
+}
+
+.fileUpload label {
+  color: #ddd;
+  font-size: 1rem;
+}
+
+.fileUpload input {
+  color: white;
+}
+
+.taskRow {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.taskRow input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: #444;
+  color: white;
+}
+
+.addBtn, .removeBtn, .submitBtn {
+  background: #4af626;
+  color: #000;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.addBtn:hover, .submitBtn:hover {
+  background: #38d814;
+}
+
+.removeBtn {
+  background: rgb(255, 77, 77);
+  color: white;
+}
+
+.submitBtn {
+  width: 100%;
+  font-size: 1.2rem;
+}

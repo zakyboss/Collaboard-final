@@ -23,14 +23,14 @@ export default function Home() {
       title: "Creative Design Solutions",
       subtitle: "Transforming ideas into stunning visual experiences",
       buttonText: "View Designs",
-      buttonLink: "/designs"
+      buttonLink: "/about"
     },
     {
       image: "/image3.png",
       title: "Let's Work Together",
       subtitle: "Building the future through collaboration and innovation",
       buttonText: "Contact Us",
-      buttonLink: "/contact"
+      buttonLink: "/contacts"
     },
   ];
 
