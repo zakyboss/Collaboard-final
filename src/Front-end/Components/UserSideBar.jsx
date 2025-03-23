@@ -1,3 +1,4 @@
+// File: src/Front-end/Pages/UserSideBar.jsx
 import React from "react";
 import styles from "./UserSideBar.module.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,13 +18,13 @@ export default function UserSideBar({ isOpen, onClose }) {
     navigate("/edit-profile");
   };
 
+  // These console logs help you verify that updated data is coming through
   console.log("User object:", user);
   console.log("Profile photo:", user?.profilePhoto);
 
   return (
     <>
       {isOpen && <div className={styles.overlay} onClick={onClose}></div>}
-
       <div className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
         <div className={styles.sidebarHeader}>
           <h3>{isAuthenticated ? "User Profile" : "Welcome Guest!"}</h3>
@@ -35,6 +36,7 @@ export default function UserSideBar({ isOpen, onClose }) {
         <div className={styles.userInfo}>
           <div className={styles.avatarContainer}>
             {isAuthenticated && user?.profilePhoto ? (
+              // Render updated profile photo; if you're storing a URL you can use it directly.
               <img
                 src={user.profilePhoto}
                 alt="Profile"
@@ -69,10 +71,18 @@ export default function UserSideBar({ isOpen, onClose }) {
                 Sign in to create projects and access all features
               </p>
               <div className={styles.guestActions}>
-                <Link to="/login" className={styles.primaryBtn} onClick={onClose}>
+                <Link
+                  to="/login"
+                  className={styles.primaryBtn}
+                  onClick={onClose}
+                >
                   Login
                 </Link>
-                <Link to="/signup" className={styles.secondaryBtn} onClick={onClose}>
+                <Link
+                  to="/signup"
+                  className={styles.secondaryBtn}
+                  onClick={onClose}
+                >
                   Sign Up
                 </Link>
               </div>
@@ -115,40 +125,60 @@ export default function UserSideBar({ isOpen, onClose }) {
                     </div>
                     <div className={styles.featureText}>
                       <span className={styles.featureTitle}>Home</span>
-                      <span className={styles.featureDesc}>Return to homepage</span>
+                      <span className={styles.featureDesc}>
+                        Return to homepage
+                      </span>
                     </div>
                   </Link>
                 </li>
                 <li className={styles.featureItem}>
-                  <Link to="/explore" onClick={onClose} className={styles.featureLink}>
+                  <Link
+                    to="/explore"
+                    onClick={onClose}
+                    className={styles.featureLink}
+                  >
                     <div className={styles.featureIcon}>
                       <i className="fas fa-compass"></i>
                     </div>
                     <div className={styles.featureText}>
                       <span className={styles.featureTitle}>Explore</span>
-                      <span className={styles.featureDesc}>Discover amazing projects</span>
+                      <span className={styles.featureDesc}>
+                        Discover amazing projects
+                      </span>
                     </div>
                   </Link>
                 </li>
                 <li className={styles.featureItem}>
-                  <Link to="/about" onClick={onClose} className={styles.featureLink}>
+                  <Link
+                    to="/about"
+                    onClick={onClose}
+                    className={styles.featureLink}
+                  >
                     <div className={styles.featureIcon}>
                       <i className="fas fa-info-circle"></i>
                     </div>
                     <div className={styles.featureText}>
                       <span className={styles.featureTitle}>About Us</span>
-                      <span className={styles.featureDesc}>Learn about our platform</span>
+                      <span className={styles.featureDesc}>
+                        Learn about our platform
+                      </span>
                     </div>
                   </Link>
                 </li>
                 <li className={styles.featureItem}>
-                  <Link to="/contact" onClick={onClose} className={styles.featureLink}>
+                  <Link
+                    to="/contact"
+                    onClick={onClose}
+                    className={styles.featureLink}
+                  >
                     <div className={styles.featureIcon}>
                       <i className="fas fa-envelope"></i>
                     </div>
                     <div className={styles.featureText}>
                       <span className={styles.featureTitle}>Contact</span>
-                      <span className={styles.featureDesc}>Get in touch with us</span>
+                      <span className={styles.featureDesc}>
+                        Get in touch with us
+                      </span>
                     </div>
                   </Link>
                 </li>
