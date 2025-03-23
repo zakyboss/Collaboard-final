@@ -1,4 +1,3 @@
-// File: src/Front-end/Components/UserSideBar.jsx
 import React from "react";
 import styles from "./UserSideBar.module.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -27,7 +26,7 @@ export default function UserSideBar({ isOpen, onClose }) {
 
       <div className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
         <div className={styles.sidebarHeader}>
-          <h3>User Profile</h3>
+          <h3>{isAuthenticated ? "User Profile" : "Welcome Guest!"}</h3>
           <button className={styles.closeButton} onClick={onClose}>
             ×
           </button>
@@ -36,14 +35,16 @@ export default function UserSideBar({ isOpen, onClose }) {
         <div className={styles.userInfo}>
           <div className={styles.avatarContainer}>
             {isAuthenticated && user?.profilePhoto ? (
-              // It's already a data URI
               <img
                 src={user.profilePhoto}
                 alt="Profile"
                 className={styles.avatar}
               />
             ) : (
-              <img src="/guest.png" alt="Guest" className={styles.avatar} />
+              <div className={styles.guestAvatarWrapper}>
+                <img src="/guest.png" alt="Guest" className={styles.avatar} />
+                <div className={styles.guestBadge}>Guest</div>
+              </div>
             )}
             {isAuthenticated && (
               <i
@@ -62,19 +63,26 @@ export default function UserSideBar({ isOpen, onClose }) {
               <p>{user?.email}</p>
             </>
           ) : (
-            <>
-              <h4>Guest</h4>
-              <p>
-                Please <Link to="/login">Login</Link> or{" "}
-                <Link to="/signup">Sign Up</Link>
+            <div className={styles.guestWelcome}>
+              <h4 className={styles.guestTitle}>Explore as a Guest</h4>
+              <p className={styles.guestMessage}>
+                Sign in to create projects and access all features
               </p>
-            </>
+              <div className={styles.guestActions}>
+                <Link to="/login" className={styles.primaryBtn} onClick={onClose}>
+                  Login
+                </Link>
+                <Link to="/signup" className={styles.secondaryBtn} onClick={onClose}>
+                  Sign Up
+                </Link>
+              </div>
+            </div>
           )}
         </div>
 
         <nav className={styles.sidebarNav}>
           <ul>
-            {isAuthenticated && (
+            {isAuthenticated ? (
               <>
                 <li>
                   <Link to="/projectCreation" onClick={onClose}>
@@ -98,17 +106,78 @@ export default function UserSideBar({ isOpen, onClose }) {
                   </button>
                 </li>
               </>
-            )}
-
-            {!isAuthenticated && (
-              <li>
-                <Link to="/login" onClick={onClose}>
-                  <i className="fas fa-user"></i> Login
-                </Link>
-              </li>
+            ) : (
+              <>
+                <li className={styles.featureItem}>
+                  <Link to="/" onClick={onClose} className={styles.featureLink}>
+                    <div className={styles.featureIcon}>
+                      <i className="fas fa-home"></i>
+                    </div>
+                    <div className={styles.featureText}>
+                      <span className={styles.featureTitle}>Home</span>
+                      <span className={styles.featureDesc}>Return to homepage</span>
+                    </div>
+                  </Link>
+                </li>
+                <li className={styles.featureItem}>
+                  <Link to="/explore" onClick={onClose} className={styles.featureLink}>
+                    <div className={styles.featureIcon}>
+                      <i className="fas fa-compass"></i>
+                    </div>
+                    <div className={styles.featureText}>
+                      <span className={styles.featureTitle}>Explore</span>
+                      <span className={styles.featureDesc}>Discover amazing projects</span>
+                    </div>
+                  </Link>
+                </li>
+                <li className={styles.featureItem}>
+                  <Link to="/about" onClick={onClose} className={styles.featureLink}>
+                    <div className={styles.featureIcon}>
+                      <i className="fas fa-info-circle"></i>
+                    </div>
+                    <div className={styles.featureText}>
+                      <span className={styles.featureTitle}>About Us</span>
+                      <span className={styles.featureDesc}>Learn about our platform</span>
+                    </div>
+                  </Link>
+                </li>
+                <li className={styles.featureItem}>
+                  <Link to="/contact" onClick={onClose} className={styles.featureLink}>
+                    <div className={styles.featureIcon}>
+                      <i className="fas fa-envelope"></i>
+                    </div>
+                    <div className={styles.featureText}>
+                      <span className={styles.featureTitle}>Contact</span>
+                      <span className={styles.featureDesc}>Get in touch with us</span>
+                    </div>
+                  </Link>
+                </li>
+              </>
             )}
           </ul>
         </nav>
+
+        {!isAuthenticated && (
+          <div className={styles.guestFooter}>
+            <p className={styles.guestFooterText}>
+              Join our community of creators and builders today!
+            </p>
+            <div className={styles.socialIcons}>
+              <a href="#" className={styles.socialIcon}>
+                <i className="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" className={styles.socialIcon}>
+                <i className="fab fa-twitter"></i>
+              </a>
+              <a href="#" className={styles.socialIcon}>
+                <i className="fab fa-instagram"></i>
+              </a>
+              <a href="#" className={styles.socialIcon}>
+                <i className="fab fa-github"></i>
+              </a>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
