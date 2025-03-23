@@ -1,115 +1,359 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
 .sidebar {
-    position: fixed;
-    top: 0;
-    right: -250px;
-    width: 250px;
-    height: 100vh;
-    background-color: var(--color-dark--0);
-    color: white;
-    transition: right 0.3s ease-in-out;
-    z-index: 1500;
-    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
-    overflow-y: auto;
+  position: fixed;
+  top: 0;
+  right: -320px; /* Start offscreen */
+  width: 320px;
+  height: 100%;
+  background: linear-gradient(135deg, #2a2a72 0%, #009ffd 100%);
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
+  overflow-y: auto;
+  color: white;
+}
+
+.sidebar.open {
+  right: 0;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebarHeader h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.closeButton {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transition: transform 0.2s;
+}
+
+.closeButton:hover {
+  transform: scale(1.2);
+}
+
+.userInfo {
+  padding: 20px;
+  text-align: center;
+}
+
+.avatarContainer {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 15px;
+}
+
+.guestAvatarWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  background-color: #f0f0f0;
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+}
+
+.guestBadge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #ff7b00;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
   }
-  
-  .sidebar.open {
-    right: 0;
+  50% {
+    transform: scale(1.1);
   }
-  
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1400;
+  100% {
+    transform: scale(1);
   }
-  
-  .sidebarHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.editIcon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #2196f3;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
+}
+
+.editIcon:hover {
+  background-color: #0d8bf0;
+  transform: scale(1.1);
+}
+
+.userInfo h4 {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.userInfo p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Guest Welcome Section */
+.guestWelcome {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  
-  .sidebarHeader h3 {
-    margin: 0;
-    font-size: 18px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .closeButton {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-  }
-  
-  .userInfo {
-    padding: 20px;
-    text-align: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  .avatarContainer {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--color-light--2);
-  }
-  
-  .editIcon {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    background: var(--color-dark--2);
-    color: white;
-    padding: 6px;
-    border-radius: 50%;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  
-  .sidebarNav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .sidebarNav a {
-    display: flex;
-    align-items: center;
-    padding: 15px 20px;
-    color: white;
-    text-decoration: none;
-    transition: background-color 0.3s;
-  }
-  
-  .sidebarNav a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  .sidebarNav i {
-    margin-right: 10px;
-    width: 20px;
-    text-align: center;
-  }
-  
-  .divider {
-    height: 1px;
-    background-color: rgba(255, 255, 255, 0.1);
-    margin: 10px 0;
-  }
-  
-  .logout {
-    color: #ff6b6b !important;
-  }
-  
+}
+
+.guestTitle {
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.guestMessage {
+  margin: 0 0 15px 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.guestActions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.primaryBtn, .secondaryBtn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+}
+
+.primaryBtn {
+  background-color: #00c853;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.primaryBtn:hover {
+  background-color: #00b248;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.secondaryBtn {
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
+}
+
+.secondaryBtn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Navigation Styles */
+.sidebarNav {
+  padding: 10px 0;
+}
+
+.sidebarNav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebarNav li a, .sidebarNav li button {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: white;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.sidebarNav li a:hover, .sidebarNav li button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebarNav li a i, .sidebarNav li button i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+}
+
+.divider {
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin: 10px 0;
+}
+
+.logout {
+  width: 100%;
+  background: none;
+  border: none;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+/* Enhanced Guest Feature Items */
+.featureItem {
+  margin: 10px 0;
+}
+
+.featureLink {
+  display: flex !important;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  margin: 0 15px;
+  padding: 15px !important;
+  transition: all 0.3s ease !important;
+}
+
+.featureLink:hover {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  transform: translateX(5px);
+}
+
+.featureIcon {
+  background: linear-gradient(145deg, #3a7bd5, #00d2ff);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.featureIcon i {
+  font-size: 1.2rem;
+}
+
+.featureText {
+  display: flex;
+  flex-direction: column;
+}
+
+.featureTitle {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.featureDesc {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+/* Guest Footer Styles */
+.guestFooter {
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 10px;
+}
+
+.guestFooterText {
+  font-size: 0.85rem;
+  margin-bottom: 15px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.socialIcons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.socialIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.socialIcon:hover {
+  background-color: white;
+  color: #2a2a72;
+  transform: translateY(-3px);
+}
