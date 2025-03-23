@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Signup.module.css";
 import { useNavigate } from "react-router";
+import BackButton from "../Components/BackButton";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -73,6 +74,7 @@ export default function Signup() {
 
   return (
     <div className={styles.signupContainer}>
+      <BackButton/>
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         {/* Username Field */}
