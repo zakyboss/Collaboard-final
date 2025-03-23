@@ -1,0 +1,102 @@
+.back-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+  }
+  
+  /* Primary theme (default) */
+  .back-button.primary {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .back-button.primary:hover {
+    background-color: #0069d9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .back-button.primary:active {
+    transform: translateY(0);
+  }
+  
+  /* Secondary theme */
+  .back-button.secondary {
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+  }
+  
+  .back-button.secondary:hover {
+    background-color: #e9ecef;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Dark theme */
+  .back-button.dark {
+    background-color: #343a40;
+    color: white;
+  }
+  
+  .back-button.dark:hover {
+    background-color: #23272b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Outline theme */
+  .back-button.outline {
+    background-color: transparent;
+    color: #007bff;
+    border: 2px solid #007bff;
+    box-shadow: none;
+  }
+  
+  .back-button.outline:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  /* Minimal theme */
+  .back-button.minimal {
+    background-color: transparent;
+    color: #6c757d;
+    box-shadow: none;
+    padding: 8px 12px;
+  }
+  
+  .back-button.minimal:hover {
+    color: #343a40;
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+  }
+  
+  /* Icon styling */
+  .back-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+    transition: transform 0.2s ease;
+  }
+  
+  .back-button:hover .back-icon {
+    transform: translateX(-3px);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 576px) {
+    .back-button {
+      padding: 6px 12px;
+      font-size: 0.85rem;
+    }
+  }
