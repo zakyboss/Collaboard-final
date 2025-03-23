@@ -1,4 +1,3 @@
-// File: src/Front-end/Pages/EditProfile.jsx
 import React, { useState, useEffect } from "react";
 import useAuthStore from "../Zustand-api/Authentication";
 import { useNavigate } from "react-router-dom";
@@ -7,57 +6,75 @@ import styles from "./EditProfile.module.css";
 export default function EditProfile() {
   const { user, isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
-
+  
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName]   = useState("");
+  const [lastName, setLastName] = useState("");
   const [profilePhoto, setProfilePhoto] = useState(null);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  
   useEffect(() => {
     if (!isAuthenticated || !user) {
       alert("You must be logged in to edit your profile.");
       navigate("/login");
     } else {
-      setFirstName(user.firstName);
-      setLastName(user.lastName);
+      setFirstName(user.firstName || "");
+      setLastName(user.lastName || "");
     }
   }, [isAuthenticated, user, navigate]);
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user) return;
-
+    
+    setIsSubmitting(true);
+    setError("");
+    
     const formData = new FormData();
     formData.append("userId", user.id);
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
+    
     if (profilePhoto) {
       formData.append("profilePhoto", profilePhoto);
     }
-
+    
     try {
       const response = await fetch(
-         "https://collaboard-php-production.up.railway.app/UpdateProfile.php",
+        "https://collaboard-php-production.up.railway.app/UpdateProfile.php",
         {
           method: "POST",
           body: formData,
         }
       );
+      
       const result = await response.json();
+      
       if (result.success) {
         alert("Profile updated successfully! Please re-login to see changes.");
         navigate("/");
       } else {
-        alert(result.message);
+        setError(result.message || "Failed to update profile");
+        console.error("Server error:", result);
       }
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("An error occurred. Please try again.");
+      setError("An error occurred while connecting to the server. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
-
+  
   return (
     <div className={styles.container}>
       <h2>Edit Profile</h2>
+      
+      {error && (
+        <div className={styles.errorMessage}>
+          {error}
+        </div>
+      )}
+      
       <form onSubmit={handleSubmit} className={styles.form}>
         <label>First Name</label>
         <input
@@ -66,7 +83,7 @@ export default function EditProfile() {
           onChange={(e) => setFirstName(e.target.value)}
           required
         />
-
+        
         <label>Last Name</label>
         <input
           type="text"
@@ -74,15 +91,20 @@ export default function EditProfile() {
           onChange={(e) => setLastName(e.target.value)}
           required
         />
-
+        
         <label>Profile Photo (Optional)</label>
         <input
           type="file"
           accept="image/*"
           onChange={(e) => setProfilePhoto(e.target.files[0])}
         />
-
-        <button type="submit">Save Changes</button>
+        
+        <button 
+          type="submit" 
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Saving..." : "Save Changes"}
+        </button>
       </form>
     </div>
   );
