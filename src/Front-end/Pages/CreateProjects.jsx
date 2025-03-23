@@ -1,8 +1,8 @@
-// File: src/Front-end/Pages/CreateProjects.jsx
 import React, { useState, useEffect } from "react";
 import styles from "./CreateProjects.module.css";
 import useAuthStore from "../Zustand-api/Authentication";
 import { useNavigate } from "react-router-dom";
+import BackButton from "../Components/BackButton";
 
 export default function CreateProjects() {
   const navigate = useNavigate();
@@ -10,7 +10,6 @@ export default function CreateProjects() {
 
   const [projectName, setProjectName] = useState("");
   const [description, setDescription] = useState("");
-  // Each task has task_name and task_description
   const [tasks, setTasks] = useState([{ task_name: "", task_description: "" }]);
   const [thumbnail, setThumbnail] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
@@ -45,23 +44,16 @@ export default function CreateProjects() {
       return;
     }
 
-    // Build multipart form data
     const formData = new FormData();
-    // MATCHES PHP: use "projName" (instead of "projectName")
     formData.append("projName", projectName);
     formData.append("description", description);
-    formData.append("tasks", JSON.stringify(tasks)); // Not currently handled by your PHP
+    formData.append("tasks", JSON.stringify(tasks));
     formData.append("devNeeded", devNeeded);
     formData.append("daysToComplete", daysToComplete);
-    formData.append("userId", user.id); // The PHP checks $data["user_id"] ?? $data["userId"]
+    formData.append("userId", user.id);
 
-    if (thumbnail) {
-      formData.append("thumbnail", thumbnail);
-    }
-    // MATCHES PHP: use "pdf_file" (instead of "pdfFile")
-    if (pdfFile) {
-      formData.append("pdf_file", pdfFile);
-    }
+    if (thumbnail) formData.append("thumbnail", thumbnail);
+    if (pdfFile) formData.append("pdf_file", pdfFile);
 
     try {
       const response = await fetch(
@@ -92,53 +84,69 @@ export default function CreateProjects() {
 
   return (
     <div className={styles.container}>
+      <BackButton />
       <h2>Create a New Project</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <input
-          type="text"
-          placeholder="Project Name"
-          value={projectName}
-          onChange={(e) => setProjectName(e.target.value)}
-          required
-        />
-        <textarea
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-        />
+        <div className={styles.inputGroup}>
+          <label>Project Name</label>
+          <input
+            type="text"
+            placeholder="Enter project name"
+            value={projectName}
+            onChange={(e) => setProjectName(e.target.value)}
+            required
+          />
+        </div>
 
-        <label>Developers Needed</label>
-        <input
-          type="number"
-          min="1"
-          value={devNeeded}
-          onChange={(e) => setDevNeeded(e.target.value)}
-          required
-        />
+        <div className={styles.inputGroup}>
+          <label>Description</label>
+          <textarea
+            placeholder="Describe your project"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </div>
 
-        <label>Days to Complete</label>
-        <input
-          type="number"
-          min="1"
-          value={daysToComplete}
-          onChange={(e) => setDaysToComplete(e.target.value)}
-          required
-        />
+        <div className={styles.inputGroup}>
+          <label>Developers Needed</label>
+          <input
+            type="number"
+            min="1"
+            value={devNeeded}
+            onChange={(e) => setDevNeeded(e.target.value)}
+            required
+          />
+        </div>
 
-        <label>Thumbnail (Optional)</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setThumbnail(e.target.files[0])}
-        />
+        <div className={styles.inputGroup}>
+          <label>Days to Complete</label>
+          <input
+            type="number"
+            min="1"
+            value={daysToComplete}
+            onChange={(e) => setDaysToComplete(e.target.value)}
+            required
+          />
+        </div>
 
-        <label>PDF File (Optional)</label>
-        <input
-          type="file"
-          accept="application/pdf"
-          onChange={(e) => setPdfFile(e.target.files[0])}
-        />
+        <div className={styles.fileUpload}>
+          <label>Thumbnail (Optional)</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setThumbnail(e.target.files[0])}
+          />
+        </div>
+
+        <div className={styles.fileUpload}>
+          <label>PDF File (Optional)</label>
+          <input
+            type="file"
+            accept="application/pdf"
+            onChange={(e) => setPdfFile(e.target.files[0])}
+          />
+        </div>
 
         <h3>Tasks</h3>
         {tasks.map((task, index) => (
@@ -160,15 +168,21 @@ export default function CreateProjects() {
                 handleTaskChange(index, "task_description", e.target.value)
               }
             />
-            <button type="button" onClick={() => removeTask(index)}>
+            <button
+              type="button"
+              className={styles.removeBtn}
+              onClick={() => removeTask(index)}
+            >
               ✖
             </button>
           </div>
         ))}
-        <button type="button" onClick={addTask}>
+        <button type="button" className={styles.addBtn} onClick={addTask}>
           + Add Task
         </button>
-        <button type="submit">Create Project</button>
+        <button type="submit" className={styles.submitBtn}>
+          Create Project
+        </button>
       </form>
     </div>
   );
