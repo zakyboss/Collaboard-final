@@ -5,6 +5,7 @@ import useProjects from "../Zustand-api/useProjects";
 import { useNavigate } from "react-router-dom";
 import styles from "./YourProjects.module.css";
 import OutputProjectsModal from "./OutputProjectsModal";
+import BackButton from "../Components/BackButton";
 
 export default function YourProjects() {
   const { user, isAuthenticated } = useAuthStore();
@@ -40,6 +41,7 @@ export default function YourProjects() {
 
   return (
     <div className={styles.container}>
+      <BackButton/>
       <h2>My Projects</h2>
       <div className={styles.cardGrid}>
         {userProjects.length === 0 ? (
