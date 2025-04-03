@@ -1,5 +1,6 @@
 // File: src/Front-end/Pages/EditProfile.jsx
 import React, { useState, useEffect } from "react";
+// import useAuthStore from "../Zustand-api/Authentication";
 import useAuthStore from "../Zustand-api/Authentication";
 import { useNavigate } from "react-router-dom";
 import styles from "./EditProfile.module.css";
@@ -63,7 +64,7 @@ export default function EditProfile() {
 
   return (
     <div className={styles.container}>
-      {/* <BackButton/> */}
+      <BackButton/>
       <h2>Edit Profile</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         <label>First Name</label>
